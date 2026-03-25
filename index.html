@@ -89,4 +89,16 @@ function limparCampos() {
   document.getElementById("bairro").value = "";
   document.getElementById("cidade").value = "";
 }
+
+function limparDados() {
+  localStorage.removeItem("entregas");
+
+  document.getElementById("lista").innerHTML = "";
+
+  totalFixo = 0;
+  totalIfood = 0;
+  diasRegistrados = [];
+
+  atualizarTotais();
+}
 </script>
