@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Ganhos</title>
+</head>
+<body>
+
+  <!-- Título da página -->
+  <h2>Controle de Entregas</h2>
+
+  <!-- Selecionar tipo de ganho -->
+  <label>Tipo:</label>
+  <select id="tipo">
+    <!-- valor fixo -->
+    <option value="fixo">Fixo</option>
+    <!-- valor de entrega iFood -->
+    <option value="ifood">iFood</option>
+  </select>
+
+  <!-- Campo para selecionar a data -->
+  <label>Data:</label>
+  <input type="date" id="data">
+
+  <!-- Campo para valor da entrega -->
+  <label>Valor:</label>
+  <input type="number" id="valor">
+
+  <!-- Campos de endereço -->
+  <label>Rua / Avenida:</label>
+  <input type="text" id="rua">
+
+  <label>Bairro:</label>
+  <input type="text" id="bairro">
+
+  <label>Cidade:</label>
+  <input type="text" id="cidade">
+
+  <!-- Botão que chama a função principal -->
+  <button onclick="adicionarEntrega()">Adicionar</button>
+
+  <!-- Área de totais -->
+  <h3>Totais:</h3>
+  <p>Total Fixo: R$ <span id="totalFixo">0</span></p>
+  <p>Total iFood: R$ <span id="totalIfood">0</span></p>
+  <p>Total Geral: R$ <span id="totalGeral">0</span></p>
+
+  <!-- Lista de entregas -->
+  <h3>Lista de Entregas:</h3>
+  <ul id="lista"></ul>
+
+  <script>
+
+    // Variáveis globais para armazenar os totais
+    let totalFixo = 0;
+    let totalIfood = 0;
+
+    // Array para guardar dias já usados (evita duplicar fixo)
+    let diasRegistrados = [];
+
+    function adicionarEntrega() {
+
+      // Pegando valores dos inputs
+      let tipo = document.getElementById("tipo").value;
+      let valor = parseFloat(document.getElementById("valor").value);
+      let rua = document.getElementById("rua").value;
+      let bairro = document.getElementById("bairro").value;
+      let cidade = document.getElementById("cidade").value;
+      let data = document.getElementById("data").value;
+
+     
+
+      
+
+      // Verifica se a data foi preenchida
+      if (!data) {
+        alert("Selecione uma data!");
+        return;
+      }
+
+      // Descobre o dia da semana (0 = domingo, 6 = sábado)
+      let dia = new Date(data + "T00:00:00").getDay();
+
+      let valorFixoDia = 0;
+
+      // Define o valor fixo baseado no dia
+      if (dia >= 1 && dia <= 5) {
+        valorFixoDia = 30; // semana
+      } else {
+        valorFixoDia = 50; // fim de semana
+      }
+
+     // Evita somar o fixo mais de uma vez no mesmo dia
+        if (!diasRegistrados.includes(data)) {
+                 totalFixo += valorFixoDia;
+             diasRegistrados.push(data);
+            }
+
+
+
+      
+      
+     
+
+      // Validação dos campos
+      if (!valor || !rua || !bairro || !cidade) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      // Soma baseado no tipo escolhido
+      if (tipo === "fixo") {
+        totalFixo += valor;
+      } else {
+        totalIfood += valor;
+      }
+
+      // Criar item da lista
+      let lista = document.getElementById("lista");
+      let item = document.createElement("li");
+
+      // Texto exibido
+      item.innerText = `${tipo.toUpperCase()} - R$ ${valor.toFixed(2)} | ${rua}, ${bairro} - ${cidade}`;
+
+      // Adiciona na lista
+      lista.appendChild(item);
+
+      // Atualiza totais na tela
+      atualizarTotais();
+
+      // Limpa os campos
+      limparCampos();
+    }
+
+    // Atualiza os números na tela
+    function atualizarTotais() {
+      document.getElementById("totalFixo").innerText = totalFixo.toFixed(2);
+      document.getElementById("totalIfood").innerText = totalIfood.toFixed(2);
+      document.getElementById("totalGeral").innerText = (totalFixo + totalIfood).toFixed(2);
+    }
+
+    // Limpa os inputs
+    function limparCampos() {
+      document.getElementById("valor").value = "";
+      document.getElementById("rua").value = "";
+      document.getElementById("bairro").value = "";
+      document.getElementById("cidade").value = "";
+
+      
+    }
+
+  </script>
+
+</body>
+</html>
