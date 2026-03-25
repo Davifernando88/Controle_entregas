@@ -62,11 +62,23 @@
   <script>
 
     // Variáveis globais para armazenar os totais
-    let entregas = [];
+    
     let totalFixo = 0;
     let totalIfood = 0;
 
-    let entrega = {
+
+
+
+
+
+    // Array para guardar dias já usados (evita duplicar fixo)
+    let diasRegistrados = [];
+
+    function adicionarEntrega() {
+
+        let entregas = [];
+
+        let entrega = {
   tipo,
   valor,
   rua,
@@ -78,8 +90,7 @@
 entregas.push(entrega);
 
 // salva no navegador
-localStorage.setItem("entregas", JSON.stringify(entregas));
-
+    ocalStorage.setItem("entregas", JSON.stringify(entregas));
 
 window.onload = function() {
   let dados = localStorage.getItem("entregas");
@@ -96,12 +107,7 @@ window.onload = function() {
       lista.appendChild(item);
     });
   }
-};
-
-    // Array para guardar dias já usados (evita duplicar fixo)
-    let diasRegistrados = [];
-
-    function adicionarEntrega() {
+  };
 
       // Pegando valores dos inputs
       let tipo = document.getElementById("tipo").value;
