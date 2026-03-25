@@ -1,3 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Controle de Ganhos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <form class="form">
+
+            <h2 class="titulo">Controle de Entregas</h2>
+            <label class="texto">Tipo:</label>
+<select id="tipo">
+    <option class="tipo" value="fixo">Fixo</option>
+    <option value="ifood">iFood</option>
+</select>
+
+<label class="texto">Data:</label>
+<input class="data-input" type="date" id="data">
+
+<label class="texto">Valor:</label>
+<input type="number" id="valor">
+
+<label class="texto">Rua / Avenida:</label>
+<input type="text" id="rua">
+
+<label class="texto">Bairro:</label>
+<input type="text" id="bairro">
+
+<label class="texto">Cidade:</label>
+<input type="text" id="cidade">
+
+
+
+<button type="button" onclick="adicionarEntrega()">Adicionar</button>
+<button type="button" onclick="limparDados()">Limpar</button>
+<div class="totais">
+<h3 class="totais-titulo">Totais:</h3>
+<p class="informacao">Total Fixo: R$ <span id="totalFixo">0</span></p>
+<p class="informacao">Total iFood: R$ <span id="totalIfood">0</span></p>
+<p class="informacao">Total Geral: R$ <span id="totalGeral">0</span></p>
+
+<h3 class="lista-entregas">Lista de Entregas:</h3>
+<ul id="lista"></ul>
+
+</div>
+</form>
+
 <script>
 let totalFixo = 0;
 let totalIfood = 0;
@@ -14,10 +64,18 @@ window.onload = function () {
     entregas.forEach(e => {
       adicionarNaLista(e);
 
+      let dia = new Date(e.data + "T00:00:00").getDay();
+      let valorFixoDia = (dia >= 1 && dia <= 5) ? 30 : 50;
+
       if (e.tipo === "fixo") {
-        totalFixo += e.valor;
+        if (!diasRegistrados.includes(e.data)) {
+          totalFixo += valorFixoDia;
+          diasRegistrados.push(e.data);
+        }
+
+        totalFixo += parseFloat(e.valor);
       } else {
-        totalIfood += e.valor;
+        totalIfood += parseFloat(e.valor);
       }
     });
 
@@ -28,7 +86,7 @@ window.onload = function () {
 // 🔥 ADICIONAR ENTREGA
 function adicionarEntrega() {
   let tipo = document.getElementById("tipo").value;
-  let valor = parseFloat(document.getElementById("valor").value) || 0;
+  let valor = parseFloat(document.getElementById("valor").value);
   let rua = document.getElementById("rua").value;
   let bairro = document.getElementById("bairro").value;
   let cidade = document.getElementById("cidade").value;
@@ -57,7 +115,7 @@ function adicionarEntrega() {
 
   entregas.push(entrega);
 
-  // 💾 SALVA
+  // 💾 SALVAR
   localStorage.setItem("entregas", JSON.stringify(entregas));
 
   adicionarNaLista(entrega);
@@ -70,7 +128,7 @@ function adicionarNaLista(e) {
   let lista = document.getElementById("lista");
   let item = document.createElement("li");
 
-  item.innerText = `${e.tipo.toUpperCase()} - R$ ${e.valor} | ${e.rua}, ${e.bairro} - ${e.cidade}`;
+  item.innerText = `${e.data} | ${e.tipo.toUpperCase()} - R$ ${parseFloat(e.valor).toFixed(2)} | ${e.rua}, ${e.bairro} - ${e.cidade}`;
 
   lista.appendChild(item);
 }
@@ -90,15 +148,21 @@ function limparCampos() {
   document.getElementById("cidade").value = "";
 }
 
+// 🔥 LIMPAR DADOS
 function limparDados() {
-  localStorage.removeItem("entregas");
+  if (confirm("Tem certeza que deseja apagar tudo?")) {
+    localStorage.removeItem("entregas");
 
-  document.getElementById("lista").innerHTML = "";
+    document.getElementById("lista").innerHTML = "";
 
-  totalFixo = 0;
-  totalIfood = 0;
-  diasRegistrados = [];
+    totalFixo = 0;
+    totalIfood = 0;
+    diasRegistrados = [];
 
-  atualizarTotais();
+    atualizarTotais();
+  }
 }
 </script>
+
+</body>
+</html>

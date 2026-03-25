@@ -63,7 +63,7 @@ html {
     font-weight: bold;
     margin: 10px;
 }
-.tipo{
+.tipo,#tipo{
     background: var(--vidro);
     color: var(--claro);
     padding: 1rem;
@@ -114,10 +114,11 @@ html {
 
 
 @media (max-width: 480px) {
-  .form input,
-.form select {
-  width: 100%;
-}
+  .form {
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 .titulo{
     font-size: 30px;
     margin-top: 50px;
