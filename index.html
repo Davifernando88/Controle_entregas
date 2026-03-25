@@ -91,10 +91,12 @@
       }
 
      // Evita somar o fixo mais de uma vez no mesmo dia
-        if (!diasRegistrados.includes(data)) {
-                 totalFixo += valorFixoDia;
-             diasRegistrados.push(data);
-            }
+       if (tipo === "fixo") {
+  if (!diasRegistrados.includes(data)) {
+    totalFixo += valorFixoDia;
+    diasRegistrados.push(data);
+  }
+}
 
 
 
