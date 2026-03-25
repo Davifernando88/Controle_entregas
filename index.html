@@ -3,51 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <title>Controle de Ganhos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <form class="form">
+        <!-- Título da página -->
+        <h2 class="titulo">Controle de Entregas</h2>
+        
+        <!-- Selecionar tipo de ganho -->
+        <label class="texto">Tipo:</label>
+        <select class="tipo" id="tipo">
+            <!-- valor fixo -->
+            <option class="tipo" value="fixo">Fixo</option>
+            <!-- valor de entrega iFood -->
+            <option class="tipo" value="ifood">iFood</option>
+        </select>
+        
+        <!-- Campo para selecionar a data -->
+        <label class="texto">Data:</label>
+        <input class="data-input" type="date" id="data">
+        
+        <!-- Campo para valor da entrega -->
+        <label class="texto">Valor:</label>
+        <input type="number" id="valor">
+        
+        <!-- Campos de endereço -->
+        <label class="texto">Rua / Avenida:</label>
+        <input type="text" id="rua">
+        
+        <label class="texto">Bairro:</label>
+        <input type="text" id="bairro">
+        
+        <label class="texto">Cidade:</label>
+        <input type="text" id="cidade">
+        
+        <!-- Botão que chama a função principal -->
+        <button type="button" onclick="adicionarEntrega()">Adicionar</button>
+    </form>
+        <div class="totais">
 
-  <!-- Título da página -->
-  <h2>Controle de Entregas</h2>
-
-  <!-- Selecionar tipo de ganho -->
-  <label>Tipo:</label>
-  <select id="tipo">
-    <!-- valor fixo -->
-    <option value="fixo">Fixo</option>
-    <!-- valor de entrega iFood -->
-    <option value="ifood">iFood</option>
-  </select>
-
-  <!-- Campo para selecionar a data -->
-  <label>Data:</label>
-  <input type="date" id="data">
-
-  <!-- Campo para valor da entrega -->
-  <label>Valor:</label>
-  <input type="number" id="valor">
-
-  <!-- Campos de endereço -->
-  <label>Rua / Avenida:</label>
-  <input type="text" id="rua">
-
-  <label>Bairro:</label>
-  <input type="text" id="bairro">
-
-  <label>Cidade:</label>
-  <input type="text" id="cidade">
-
-  <!-- Botão que chama a função principal -->
-  <button onclick="adicionarEntrega()">Adicionar</button>
-
-  <!-- Área de totais -->
-  <h3>Totais:</h3>
-  <p>Total Fixo: R$ <span id="totalFixo">0</span></p>
-  <p>Total iFood: R$ <span id="totalIfood">0</span></p>
-  <p>Total Geral: R$ <span id="totalGeral">0</span></p>
-
-  <!-- Lista de entregas -->
-  <h3>Lista de Entregas:</h3>
-  <ul id="lista"></ul>
+            <!-- Área de totais -->
+            <h3 class="totais-titulo">Totais:</h3>
+            
+            <p class="informacao">Total Fixo: R$ <span id="totalFixo">0</span></p>
+            <p class="informacao">Total iFood: R$ <span id="totalIfood">0</span></p>
+            <p class="informacao">Total Geral: R$ <span id="totalGeral">0</span></p>
+            
+            
+            <!-- Lista de entregas -->
+            <h3 class="lista-entregas">Lista de Entregas:</h3>
+            <ul id="lista"></ul>
+            
+        </div>
 
   <script>
 
