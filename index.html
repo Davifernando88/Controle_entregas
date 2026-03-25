@@ -39,6 +39,8 @@
         
         <!-- Botão que chama a função principal -->
         <button type="button" onclick="adicionarEntrega()">Adicionar</button>
+
+        <button class="limpa tela" onclick="limparDados()">Limpar</button>
     </form>
         <div class="totais">
 
@@ -59,8 +61,41 @@
   <script>
 
     // Variáveis globais para armazenar os totais
+    let entregas = [];
     let totalFixo = 0;
     let totalIfood = 0;
+
+    let entrega = {
+  tipo,
+  valor,
+  rua,
+  bairro,
+  cidade,
+  data
+};
+
+entregas.push(entrega);
+
+// salva no navegador
+localStorage.setItem("entregas", JSON.stringify(entregas));
+
+
+window.onload = function() {
+  let dados = localStorage.getItem("entregas");
+
+  if (dados) {
+    entregas = JSON.parse(dados);
+
+    entregas.forEach(e => {
+      let lista = document.getElementById("lista");
+      let item = document.createElement("li");
+
+      item.innerText = `${e.tipo.toUpperCase()} - R$ ${e.valor} | ${e.rua}, ${e.bairro} - ${e.cidade}`;
+
+      lista.appendChild(item);
+    });
+  }
+};
 
     // Array para guardar dias já usados (evita duplicar fixo)
     let diasRegistrados = [];
