@@ -148,13 +148,19 @@ function limparCampos() {
   document.getElementById("cidade").value = "";
 }
 
-// 🔥 LIMPAR DADOS
 function limparDados() {
   if (confirm("Tem certeza que deseja apagar tudo?")) {
+
+    // 🔥 limpa do navegador
     localStorage.removeItem("entregas");
 
+    // 🔥 limpa array em memória (ESSE ERA O PROBLEMA)
+    entregas = [];
+
+    // limpa lista da tela
     document.getElementById("lista").innerHTML = "";
 
+    // zera totais
     totalFixo = 0;
     totalIfood = 0;
     diasRegistrados = [];
